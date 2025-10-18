@@ -1,19 +1,19 @@
 ## 📊 ER Diagram 
 
+
 ```mermaid
 %%{init: {
   'theme': 'base',
   'themeVariables': {
-    'primaryColor': '#FFF7E6',      /* light card fill */
-    'primaryTextColor': '#111111',  /* dark text */
+    'primaryColor': '#FFF7E6',
+    'primaryTextColor': '#111111',
     'nodeBorder': '#CCCCCC',
-    'lineColor': '#ffffff',         /* connector color */
+    'lineColor': '#ffffff',
     'edgeColor': '#ffffff'
   },
   'flowchart': { 'curve': 'linear' }
 }}%%
 erDiagram
-  %% --- RELATIONSHIPS ---
   USER ||--o{ USER_STATS_LOG : logs
   USER ||--o{ USER_PB : "has personal bests"
   USER ||--o{ WORKOUT_SESSIONS : performs
@@ -22,13 +22,12 @@ erDiagram
   EXERCISE ||--o{ SESSION_EXERCISES : used_in
   EXERCISE ||--o{ EXERCISE_TARGET_ASSOCIATION : linked_with
   TARGET ||--o{ EXERCISE_TARGET_ASSOCIATION : "has targets"
+  USER ||--o{ PROGRESS : "tracks performance"
   USER ||--o{ GOALS : "sets goals"
-  GOALS ||--o{ PROGRESS : "tracked_by"
   USER ||--o{ WORKOUT_PLAN : "has plan"
   WORKOUT_PLAN ||--o{ DAILY_WORKOUT_PLAN : includes
   USER ||--o{ DATA_VALIDATION : validates
 
-  %% --- TABLES (key columns only) ---
   USER { int user_id PK
          string first_name
          string last_name
@@ -64,15 +63,20 @@ erDiagram
   EXERCISE_TARGET_ASSOCIATION { int association_id PK
                                 int exercise_id FK
                                 int target_id FK }
+  PROGRESS { int metric_id PK
+             int exercise_id FK
+             int user_id FK
+             date date
+             string period_type
+             decimal max_weight
+             decimal avg_weight
+             decimal total_volume
+             int workout_count }
   GOALS { int goal_id PK
           int user_id FK
           string description
           date start_date
           date end_date }
-  PROGRESS { int progress_id PK
-             int goal_id FK
-             decimal completion_percent
-             string status }
   WORKOUT_PLAN { int plan_id PK
                  int user_id FK
                  string plan_name
@@ -85,3 +89,4 @@ erDiagram
                     int user_id FK
                     string table_name
                     string result }
+
