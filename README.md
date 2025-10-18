@@ -1,22 +1,34 @@
-## 📊 ER Diagram (high-contrast)
+## 📊 ER Diagram 
 
 ```mermaid
 %%{init: {
   'theme': 'base',
   'themeVariables': {
-    'primaryColor': '#ffffff',
-    'secondaryColor': '#ffffff',
-    'tertiaryColor': '#f2f2f2',
-    'primaryTextColor': '#111111',
-    'lineColor': '#111111',
-    'edgeColor': '#111111'
+    'primaryColor': '#FFF7E6',      /* light card fill */
+    'primaryTextColor': '#111111',  /* dark text */
+    'nodeBorder': '#CCCCCC',
+    'lineColor': '#ffffff',         /* connector color */
+    'edgeColor': '#ffffff'
   },
   'flowchart': { 'curve': 'linear' }
 }}%%
 erDiagram
+  %% --- RELATIONSHIPS ---
   USER ||--o{ USER_STATS_LOG : logs
   USER ||--o{ USER_PB : "has personal bests"
+  USER ||--o{ WORKOUT_SESSIONS : performs
+  WORKOUT_SESSIONS ||--o{ SESSION_EXERCISES : contains
+  SESSION_EXERCISES ||--o{ SETS : consists_of
+  EXERCISE ||--o{ SESSION_EXERCISES : used_in
+  EXERCISE ||--o{ EXERCISE_TARGET_ASSOCIATION : linked_with
+  TARGET ||--o{ EXERCISE_TARGET_ASSOCIATION : "has targets"
+  USER ||--o{ GOALS : "sets goals"
+  GOALS ||--o{ PROGRESS : "tracked_by"
+  USER ||--o{ WORKOUT_PLAN : "has plan"
+  WORKOUT_PLAN ||--o{ DAILY_WORKOUT_PLAN : includes
+  USER ||--o{ DATA_VALIDATION : validates
 
+  %% --- TABLES (key columns only) ---
   USER { int user_id PK
          string first_name
          string last_name
@@ -31,14 +43,6 @@ erDiagram
             int user_id FK
             string exercise_name
             decimal max_weight }
-
-  USER ||--o{ WORKOUT_SESSIONS : performs
-  WORKOUT_SESSIONS ||--o{ SESSION_EXERCISES : contains
-  SESSION_EXERCISES ||--o{ SETS : consists_of
-  EXERCISE ||--o{ SESSION_EXERCISES : used_in
-  EXERCISE ||--o{ EXERCISE_TARGET_ASSOCIATION : linked_with
-  TARGET ||--o{ EXERCISE_TARGET_ASSOCIATION : "has targets"
-
   WORKOUT_SESSIONS { int session_id PK
                      int user_id FK
                      date session_date
@@ -60,9 +64,6 @@ erDiagram
   EXERCISE_TARGET_ASSOCIATION { int association_id PK
                                 int exercise_id FK
                                 int target_id FK }
-
-  USER ||--o{ GOALS : "sets goals"
-  GOALS ||--o{ PROGRESS : "tracked_by"
   GOALS { int goal_id PK
           int user_id FK
           string description
@@ -72,10 +73,6 @@ erDiagram
              int goal_id FK
              decimal completion_percent
              string status }
-
-  USER ||--o{ WORKOUT_PLAN : "has plan"
-  WORKOUT_PLAN ||--o{ DAILY_WORKOUT_PLAN : includes
-  USER ||--o{ DATA_VALIDATION : validates
   WORKOUT_PLAN { int plan_id PK
                  int user_id FK
                  string plan_name
@@ -88,4 +85,3 @@ erDiagram
                     int user_id FK
                     string table_name
                     string result }
-
