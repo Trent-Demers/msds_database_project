@@ -145,7 +145,6 @@ erDiagram
     string unit
     int exercise_id FK
     date start_date
-    date target_date
     string status
     date completion_date
   }
