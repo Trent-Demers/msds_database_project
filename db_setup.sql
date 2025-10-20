@@ -85,7 +85,7 @@ CREATE TABLE workoutware.dbo.workout_sessions (
    duration_minutes INT,
    bodyweight DECIMAL(5,2),
    completed BIT DEFAULT 1,
-   is_template INT DEFAULT 0,
+   is_template BIT DEFAULT 0,
    FOREIGN KEY (user_id) REFERENCES workoutware.dbo.user_info(user_id) ON DELETE CASCADE
    );
 
