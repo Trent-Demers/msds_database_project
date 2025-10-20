@@ -1,8 +1,8 @@
 from django.db import models
 
 # Create your models here.
-class user(models.Model):
-    user_id = models.IntegerField()
+class user_info(models.Model):
+    user_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
@@ -19,3 +19,17 @@ class user(models.Model):
     registered = models.BooleanField()
     fitness_goal = models.CharField(max_length=50)
     user_type = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'user_info'
+
+class exercise(models.Model):
+    exercise_id = models.IntegerField()
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=50)
+    subtype = models.CharField(max_length=50)
+    equipment = models.CharField(max_length=50)
+    difficulty = models.IntegerField()
+    description = models.TextField()
+    demo_link = models.CharField(max_length=50)

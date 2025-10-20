@@ -79,10 +79,6 @@ WSGI_APPLICATION = 'workoutware.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3'
-    },
-    'mssql': {
         'ENGINE': 'mssql',  # Or 'mssql' if using older versions of mssql-django
         'NAME': 'workoutware',
         'USER': 'SA',

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
-from workoutware_app.models import user as User
+from .models import user_info
 
 
 
@@ -18,8 +18,8 @@ def home(request):
         #     template = loader.get_template('admin_dashboard/')
         #     return HttpResponse(template.render())
         else:
-            # users = User.objects.all().values()
-            # print(users)
+            users = user_info.objects.all().values()
+            print(users)
             return render(request, 'admin_dashboard.html', {})
     else:
         return redirect('accounts/login')
