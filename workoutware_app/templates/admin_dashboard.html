@@ -1,0 +1,13 @@
+<head>
+
+</head>
+<body>
+    <p>Admin Dashboard</p>
+    <!-- {% for x in user_data %}
+        <p>{{x.first_name}}</p>
+    {% endfor %} -->
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Log Out</button>
+    </form>
+</body>

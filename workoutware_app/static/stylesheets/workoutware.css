@@ -1,0 +1,15 @@
+#login_box_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
+#login_box {
+    width: 300px; /* Example width */
+    height: 200px; /* Example height */
+    background-color: #bad012;
+    padding: 20px;
+    text-align: center;
+    line-height: 40px;
+}

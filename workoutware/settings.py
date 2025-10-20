@@ -55,7 +55,7 @@ ROOT_URLCONF = 'workoutware.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +68,9 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
 WSGI_APPLICATION = 'workoutware.wsgi.application'
 
 
@@ -77,7 +80,19 @@ WSGI_APPLICATION = 'workoutware.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'db.sqlite3'
+    },
+    'mssql': {
+        'ENGINE': 'mssql',  # Or 'mssql' if using older versions of mssql-django
+        'NAME': 'workoutware',
+        'USER': 'SA',
+        'PASSWORD': 'Rutgers123',
+        'HOST': 'localhost',  # e.g., 'localhost', 'your_server_ip'
+        'PORT': '1433',  # Default SQL Server port
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',  # Or the appropriate ODBC driver installed on your system
+            # 'MARS_Connection': True, # Optional: For Multiple Active Result Sets
+        },
     }
 }
 
