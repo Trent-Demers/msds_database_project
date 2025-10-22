@@ -79,16 +79,12 @@ WSGI_APPLICATION = 'workoutware.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',  # Or 'mssql' if using older versions of mssql-django
-        'NAME': 'workoutware',
-        'USER': 'SA',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'workoutware', 
+        'USER': 'root',
         'PASSWORD': 'Rutgers123',
-        'HOST': 'localhost',  # e.g., 'localhost', 'your_server_ip'
-        'PORT': '1433',  # Default SQL Server port
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',  # Or the appropriate ODBC driver installed on your system
-            # 'MARS_Connection': True, # Optional: For Multiple Active Result Sets
-        },
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

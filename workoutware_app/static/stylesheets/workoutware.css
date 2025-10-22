@@ -13,3 +13,11 @@
     text-align: center;
     line-height: 40px;
 }
+
+.form-container {
+  display: flex;
+  flex-direction: column; /* Stacks elements vertically */
+  align-items: flex-start; /* Aligns items to the start of the cross axis (left) */
+  /* Or use align-items: center; for horizontal centering */
+  /* Or use justify-content: center; for vertical centering when flex-direction is row */
+}

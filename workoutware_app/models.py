@@ -25,7 +25,7 @@ class user_info(models.Model):
         db_table = 'user_info'
 
 class exercise(models.Model):
-    exercise_id = models.IntegerField()
+    exercise_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=50)
     subtype = models.CharField(max_length=50)
@@ -33,3 +33,8 @@ class exercise(models.Model):
     difficulty = models.IntegerField()
     description = models.TextField()
     demo_link = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'exercise'
+

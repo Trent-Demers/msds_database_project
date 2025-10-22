@@ -4,4 +4,5 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('add_exercise', views.add_exercise, name="add_exercise"),
 ]

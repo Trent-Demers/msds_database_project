@@ -1,13 +1,62 @@
 <head>
-
+    <link rel="stylesheet" type="text/css" href="../static/stylesheets/workoutware.css">
 </head>
 <body>
-    <p>Admin Dashboard</p>
+    <h1>Admin Dashboard</h1>
     <!-- {% for x in user_data %}
         <p>{{x.first_name}}</p>
     {% endfor %} -->
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button type="submit">Log Out</button>
+    </form>
+
+    <h2>Current Exercises:</h2>
+
+    {% for x in exercises %}
+        <p>{{x.exercise_id}}) {{x.name}}</p>
+    {% endfor %}
+
+    <h2>Add New Exercise:</h2>
+
+    <form action="{% url 'add_exercise' %}" method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <label for="exercise_name">Exercise Name:</label>
+            <input id="exercise_name" type="text" name="exercise_name" value=""><br>
+
+            <label for="exercise_type">Exercise Type:</label>
+            <select name="exercise_type" id="exercise_type">
+                <option value="cardio">Cardio</option>
+                <option value="strength">Strength</option>
+                <option value="flexibility">Flexibility</option>
+            </select><br>
+
+            <label for="exercise_subtype">Exercise Subtype:</label>
+            <select name="exercise_subtype" id="exercise_subtype">
+                <option value="compound">Compound</option>
+                <option value="steady_state">Steady State</option>
+                <option value="isometric">Isometric</option>
+            </select><br>
+
+            <label for="exercise_equipment">Exercise Equipment:</label>
+            <select name="exercise_equipment" id="exercise_equipment">
+                <option value="body_weight">Body Weight</option>
+                <option value="barbell">Barbell</option>
+                <option value="dumbbell">Dumbbell</option>
+            </select><br>
+
+            <label for="exercise_difficulty">Exercise Difficulty:</label>
+            <input id="exercise_difficulty" type="number" name="exercise_difficulty" step="1" value="1"><br>
+
+            <label for="exercise_description">Exercise Description:</label>
+            <textarea id="exercise_description" name="exercise_description" rows="5" cols="40" placeholder="Enter your description here..."></textarea><br>
+
+            <label for="exercise_demo">Exercise Demo Link:</label>
+            <input id="exercise_demo" type="text" name="exercise_demo" value=""><br>
+
+            <input type="submit" value="Add Exercise">
+        </div>
+        
     </form>
 </body>
