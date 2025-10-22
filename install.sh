@@ -2,6 +2,10 @@
 # PIP VERSION: 25.2
 # MySQL VERSION: 8.0
 
+# Download repository from GitHub
+git clone https://github.com/Trent-Demers/workoutware
+cd workoutware
+
 # Setup MySQL container with Docker
 docker pull mysql:8.0
 docker run --name workoutware -e MYSQL_ROOT_PASSWORD=Rutgers123 -p 3306:3306 -d mysql:8.0
