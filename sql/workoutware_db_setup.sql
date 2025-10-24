@@ -128,7 +128,6 @@ CREATE TABLE sets (
    weight DECIMAL(6,2),
    reps INT,
    rpe INT,
-   weight INT,
    completion_time DATETIME,
    completed BOOLEAN DEFAULT 1,
    is_warmup BOOLEAN, 
@@ -207,3 +206,4 @@ CREATE TABLE daily_workout_plan (
    FOREIGN KEY (workout_plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE,
    FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE SET NULL
 );
+
