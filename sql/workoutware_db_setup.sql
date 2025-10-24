@@ -15,7 +15,7 @@ CREATE TABLE user_info (
    password_hash VARCHAR(100) NOT NULL,
    date_of_birth DATE,
    height DECIMAL(5,2),
-   date_registered DATE,
+   date_registered DATE DEFAULT (CURRENT_DATE),
    date_unregistered DATE,
    registered BOOLEAN,
    fitness_goal VARCHAR(50),
@@ -76,16 +76,20 @@ CREATE TABLE user_pb (
    pr_id INT NOT NULL AUTO_INCREMENT,
    user_id INT NOT NULL,
    exercise_id INT NOT NULL,
+   session_id INT NOT NULL,
    pr_type VARCHAR(20) NOT NULL,
    pb_weight DECIMAL(6,2),
+   pb_sets INT, 
    pb_reps INT,
    pb_time TIME,
+   pb_distance DECIMAL(6,2),
    pb_date DATE NOT NULL,
    previous_pr DECIMAL(6,2),
    notes TEXT,
    PRIMARY KEY (pr_id),
    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
-   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE
+   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE,
+   FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE CASCADE
 );
 
 CREATE TABLE workout_sessions (
@@ -111,6 +115,7 @@ CREATE TABLE session_exercises (
    target_sets INT,
    target_reps INT,
    completed BOOLEAN DEFAULT 1,
+   notes TEXT,
    PRIMARY KEY (session_exercise_id),
    FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE CASCADE,
    FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE
@@ -123,9 +128,11 @@ CREATE TABLE sets (
    weight DECIMAL(6,2),
    reps INT,
    rpe INT,
+   weight INT,
+   completion_time DATETIME,
    completed BOOLEAN DEFAULT 1,
    is_warmup BOOLEAN, 
-   completion_time DATETIME,
+   notes TEXT,
    PRIMARY KEY (set_id),
    FOREIGN KEY (session_exercise_id) REFERENCES session_exercises(session_exercise_id) ON DELETE CASCADE,
    CHECK (rpe >= 1 AND rpe <= 10)
@@ -150,7 +157,7 @@ CREATE TABLE goals (
    );
 
 CREATE TABLE progress (
-   metric_id INT NOT NULL AUTO_INCREMENT,
+   progress_id INT NOT NULL AUTO_INCREMENT,
    user_id INT NOT NULL,
    exercise_id INT NOT NULL,
    date DATE NOT NULL,
@@ -173,7 +180,7 @@ CREATE TABLE data_validation (
    expected_max DECIMAL(6,2),
    flagged_as VARCHAR(20),
    user_action VARCHAR(20),
-   timestamp DATETIME,
+   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (validation_id),
    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
    FOREIGN KEY (set_id) REFERENCES sets(set_id) ON DELETE SET NULL,
