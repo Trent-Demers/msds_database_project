@@ -53,13 +53,13 @@ INSERT INTO exercise_target_association (exercise_id, target_id, intensity)
 	(7, 8, 'primary'),
 	(7, 7, 'secondary');
     
-INSERT INTO user_pb (user_id, exercise_id, pr_type, pb_weight, pb_reps, pb_date, previous_pr, notes)
+INSERT INTO user_pb (user_id, session_id, exercise_id, pr_type, pb_weight, pb_reps, pb_date, previous_pr, notes)
 	VALUES 
-	(1, 1, 'weight', 225.0, 1, '2025-09-15', 185.0, ''),
-	(1, 1, 'weight', 185.0, 8, '2025-09-01', 0.0, ''),
-	(2, 3, 'reps', NULL, 15, '2025-10-01', NULL, ''),
-	(3, 2, 'weight', 405.0, 1, '2025-08-20', 365.0, ''),
-	(3, 6, 'weight', 495.0, 1, '2025-09-10', NULL, '');
+	(1, 1, 1, 'weight', 225.0, 1, '2025-09-15', 185.0, ''),
+	(1, 2, 1, 'weight', 185.0, 8, '2025-09-01', 0.0, ''),
+	(2, 2, 3, 'reps', NULL, 15, '2025-10-01', NULL, ''),
+	(3, 3, 2, 'weight', 405.0, 1, '2025-08-20', 365.0, ''),
+	(3, 4, 6, 'weight', 495.0, 1, '2025-09-10', NULL, '');
     
 INSERT INTO workout_sessions (user_id, session_name, session_date, start_time, duration_minutes, bodyweight, completed, is_template)
 	VALUES
@@ -103,7 +103,7 @@ INSERT INTO sets (session_exercise_id, set_number, weight, reps, rpe, completed,
     (7, 4, 365.0, 5, 10, 1, 0, NULL),
     (7, 5, 365.0, 5, 10, 1, 0, NULL);
     
-INSERT INTO goals (user_id, goal_type, goal_description, target_value, current_value, unit, exercise_id, start_date, target_date, status)
+INSERT INTO goals (user_id, goal_type, goal_description, target_value, current_value, unit, exercise_id, start_date, completion_date, status)
 	VALUES
     (1, 'PR', 'Bench press 225 lbs', 225.0, 185.0, 'lbs', 1, '2025-09-01', '2025-12-31', 'active'),
     (2, 'bodyweight', 'Lose weight to 145 lbs', 145.0, 152.0, 'lbs', NULL, '2025-10-01', '2025-11-30', 'active'),
