@@ -39,7 +39,7 @@ CREATE TABLE user_stats_log (
    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
 );
    
-  CREATE TABLE exercise (
+CREATE TABLE exercise (
    exercise_id INT NOT NULL AUTO_INCREMENT,
    name VARCHAR(100) NOT NULL,
    type VARCHAR(50) NOT NULL,
@@ -71,26 +71,6 @@ CREATE TABLE exercise_target_association (
    FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE,
    FOREIGN KEY (target_id) REFERENCES target(target_id) ON DELETE CASCADE
    );
-   
-CREATE TABLE user_pb (
-   pr_id INT NOT NULL AUTO_INCREMENT,
-   user_id INT NOT NULL,
-   exercise_id INT NOT NULL,
-   session_id INT NOT NULL,
-   pr_type VARCHAR(20) NOT NULL,
-   pb_weight DECIMAL(6,2),
-   pb_sets INT, 
-   pb_reps INT,
-   pb_time TIME,
-   pb_distance DECIMAL(6,2),
-   pb_date DATE NOT NULL,
-   previous_pr DECIMAL(6,2),
-   notes TEXT,
-   PRIMARY KEY (pr_id),
-   FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
-   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE,
-   FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE CASCADE
-);
 
 CREATE TABLE workout_sessions (
    session_id INT NOT NULL AUTO_INCREMENT,
@@ -136,7 +116,27 @@ CREATE TABLE sets (
    FOREIGN KEY (session_exercise_id) REFERENCES session_exercises(session_exercise_id) ON DELETE CASCADE,
    CHECK (rpe >= 1 AND rpe <= 10)
 );
-   
+
+CREATE TABLE user_pb (
+   pr_id INT NOT NULL AUTO_INCREMENT,
+   user_id INT NOT NULL,
+   exercise_id INT NOT NULL,
+   session_id INT NOT NULL,
+   pr_type VARCHAR(20) NOT NULL,
+   pb_weight DECIMAL(6,2),
+   pb_sets INT, 
+   pb_reps INT,
+   pb_time TIME,
+   pb_distance DECIMAL(6,2),
+   pb_date DATE NOT NULL,
+   previous_pr DECIMAL(6,2),
+   notes TEXT,
+   PRIMARY KEY (pr_id),
+   FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
+   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE,
+   FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE CASCADE
+);
+
 CREATE TABLE goals (
    goal_id INT NOT NULL AUTO_INCREMENT,
    user_id INT NOT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE progress (
    avg_weight DECIMAL(6,2),
    total_volume DECIMAL(10,2),
    workout_count INT,
-   PRIMARY KEY (metric_id),
+   PRIMARY KEY (progress_id),
    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
    FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE CASCADE
    );
@@ -206,4 +206,5 @@ CREATE TABLE daily_workout_plan (
    FOREIGN KEY (workout_plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE,
    FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE SET NULL
 );
+
 
