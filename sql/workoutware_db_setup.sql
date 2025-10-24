@@ -147,6 +147,7 @@ CREATE TABLE goals (
    unit VARCHAR(20) NOT NULL,
    exercise_id INT,
    start_date DATE NOT NULL,
+   target_date DATE,
    status VARCHAR(50) DEFAULT 'active',
    completion_date DATE,
    PRIMARY KEY (goal_id),
@@ -205,6 +206,7 @@ CREATE TABLE daily_workout_plan (
    FOREIGN KEY (workout_plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE,
    FOREIGN KEY (session_id) REFERENCES workout_sessions(session_id) ON DELETE SET NULL
 );
+
 
 
 
