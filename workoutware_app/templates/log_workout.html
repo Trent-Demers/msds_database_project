@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+     {% load static %}
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/workoutware.css">
+    <title>Log Workout</title>
+</head>
+<body>
+    <h1>Log Workout</h1>
+    
+    <a href="{% url 'home' %}">← Back to Dashboard</a>
+    
+    <h2>Start New Workout Session</h2>
+    <form action="{% url 'create_session' %}" method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <label for="session_name">Workout Name:</label>
+            <input type="text" id="session_name" name="session_name" placeholder="e.g., Push Day" required><br>
+            
+            <label for="session_date">Date:</label>
+            <input type="date" id="session_date" name="session_date" value="{{ today|date:'Y-m-d' }}" required><br>
+            
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time"><br>
+            
+            <label for="bodyweight">Your Weight Today (lbs):</label>
+            <input type="number" id="bodyweight" name="bodyweight" step="0.1" placeholder="Optional"><br>
+            
+            <button type="submit">Create Workout Session</button>
+        </div>
+    </form>
+    
+    <hr>
+    
+    <h2>Recent Workouts</h2>
+    {% if recent_sessions %}
+        <ul>
+        {% for session in recent_sessions %}
+            <li>
+                <strong>{{ session.session_name }}</strong> - {{ session.session_date }}
+                <a href="{% url 'add_exercises_to_session' session.session_id %}">View/Continue</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No workouts logged yet. Start your first one above!</p>
+    {% endif %}
+</body>
+</html>

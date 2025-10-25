@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/workoutware.css">
+    <title>Progress & Trends</title>
+    <style>
+        .progress-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .progress-table th {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .progress-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .progress-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .validation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .validation-table th {
+            background-color: #2196f3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .validation-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .flag-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .badge-outlier { background-color: #ffcdd2; color: #c62828; }
+        .badge-new_pr { background-color: #c8e6c9; color: #2e7d32; }
+        .badge-normal { background-color: #bbdefb; color: #1565c0; }
+        .badge-suspicious_low { background-color: #ffe0b2; color: #e65100; }
+        .badge-first_time { background-color: #e1bee7; color: #6a1b9a; }
+        .feature-box {
+            background-color: #e8f5e9;
+            border-left: 6px solid #4caf50;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        .section-header {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 30px 0 10px 0;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Your Progress & Trends</h1>
+    
+    <a href="{% url 'home' %}">← Back to Dashboard</a> | 
+    <a href="{% url 'log_workout' %}">💪 Log Workout</a>
+    
+    <div class="section-header">
+        <h2>Weekly Progress Metrics</h2>
+        <p>Track your strength gains over time</p>
+    </div>
+    
+    {% if progress_data %}
+        <table class="progress-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Exercise</th>
+                    <th>Period</th>
+                    <th>Max Weight</th>
+                    <th>Avg Weight</th>
+                    <th>Total Volume</th>
+                    <th>Workouts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in progress_data %}
+                <tr>
+                    <td>{{ p.date|date:"M d, Y" }}</td>
+                    <td><strong>{{ p.exercise_id.name }}</strong></td>
+                    <td>{{ p.period_type|capfirst }}</td>
+                    <td>{% if p.max_weight %}{{ p.max_weight }} lbs{% else %}N/A{% endif %}</td>
+                    <td>{% if p.avg_weight %}{{ p.avg_weight|floatformat:1 }} lbs{% else %}N/A{% endif %}</td>
+                    <td>{% if p.total_volume %}{{ p.total_volume|floatformat:0 }} lbs{% else %}N/A{% endif %}</td>
+                    <td>{{ p.workout_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="padding: 20px; background-color: #fff3e0; border-radius: 5px;">
+            No progress data yet. Complete a few workouts to see your trends! The system will automatically calculate weekly metrics after you log sets.
+        </p>
+    {% endif %}
+    
+    <div class="section-header">
+        <h2>Recent Validation Checks</h2>
+        <p>Real-time data accuracy monitoring</p>
+    </div>
+    
+    {% if validations %}
+        <table class="validation-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Exercise</th>
+                    <th>Input Weight</th>
+                    <th>Expected Max</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in validations %}
+                <tr>
+                    <td>{{ v.timestamp|date:"M d, Y H:i" }}</td>
+                    <td><strong>{{ v.exercise_id.name }}</strong></td>
+                    <td>{{ v.input_weight }} lbs</td>
+                    <td>{% if v.expected_max %}{{ v.expected_max }} lbs{% else %}N/A{% endif %}</td>
+                    <td>
+                        <span class="flag-badge badge-{{ v.flagged_as }}">
+                            {% if v.flagged_as == 'outlier' %}⚠️ Outlier
+                            {% elif v.flagged_as == 'new_pr' %}🎉 New PR!
+                            {% elif v.flagged_as == 'normal' %}✓ Normal
+                            {% elif v.flagged_as == 'suspicious_low' %}⚠️ Low
+                            {% elif v.flagged_as == 'first_time' %}🌟 First Time
+                            {% else %}{{ v.flagged_as|capfirst }}{% endif %}
+                        </span>
+                    </td>
+                    <td>{{ v.user_action|default:"Logged"|capfirst }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="padding: 20px; background-color: #e3f2fd; border-radius: 5px;">
+            No validation history yet. Log some workouts to see smart validation in action!
+        </p>
+    {% endif %}
+    
+    </body>
+</html>
