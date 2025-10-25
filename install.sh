@@ -31,7 +31,10 @@ pip install -r requirements.txt
 # Link Django to MySQL database
 python manage.py makemigrations
 python manage.py migrate
-python manage.py createsuperuser 
+python manage.py createsuperuser    # Creates an admin account
+
 
 # Start the server
 python manage.py runserver
+
+# To see the use of the application: user needs to sign up
